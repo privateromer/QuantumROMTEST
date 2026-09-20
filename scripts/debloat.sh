@@ -34,9 +34,9 @@ CARRIER_APPS=(
 
 # SAMSUNG FEATURES / APPS
 SAMSUNG_APPS=(
-"SamsungCalendar" "SamsungTTS" "SamsungBilling"
+"SamsungCalendar" "SamsungBilling"
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
-"SamsungPass" "SamsungSmartSuggestions"
+"SamsungPass"
 "SamsungPassAutofill_v1" "WarrantyCare"
 "AirCommand" "AppUpdateCenter" "AREmoji"
 "AREmojiEditor" "AutoDoodle" "AvatarEmojiSticker"
@@ -54,8 +54,7 @@ SAMSUNG_DEX_APPS=("DeXonPC" "DesktopModeUiService" "KnoxDesktopLauncher"
 
 # SAMSUNG BIXBY APPS
 SAMSUNG_BIXBY_APPS=(
-"BixbyWakeup" "BixbyInterpreter" "VisionIntelligence3.7" "Bixby" "BixbyService"
-"BixbyVisionFramework3.5" "SystemUIBixby2" "VisionModel-Stub" "SettingsBixby"
+"Bixby"
 )
 
 
@@ -68,9 +67,9 @@ SAMSUNG_AI=(
 
 # GOOGLE APPS
 GOOGLE_APPS=(
-"SpeechServicesByGoogle" "Maps" "Duo" "Photos"
-"AssistantShell" "BardShell" "DuoStub"
-"GoogleCalendarSyncAdapter" "AndroidDeveloperVerifier"
+"SpeechServicesByGoogle" "Maps" "Duo" "Photos" "YouTube"
+"AssistantShell" "DuoStub" "Gmail2"
+"GoogleCalendarSyncAdapter"
 "YourPhone_Stub" "AndroidAutoStub" "FamilyLinkParentalControls"
 "AndroidSystemIntelligence" "GoogleRestore" "SamsungMessages"
 "SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
@@ -219,7 +218,6 @@ DEBLOAT() {
 	REMOVE_FABRIC_CRYPTO "$EXTRACTED_FIRM_DIR"
 
 	echo -e "- Deleting unnecessary files and folders."
-    rm -rf "$EXTRACTED_FIRM_DIR/system/system/app"/SamsungTTS*
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.bprof"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.prof"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/hidden"
@@ -228,10 +226,7 @@ DEBLOAT() {
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app/MediaSearch"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app"/GameDriver-*
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/skt"
-	rm -rf "$EXTRACTED_FIRM_DIR/system/system/tts"
-	rm -rf "$EXTRACTED_FIRM_DIR/product/app/Gmail2/oat"
     rm -rf "$EXTRACTED_FIRM_DIR/product/app/Maps/oat"
 	rm -rf "$EXTRACTED_FIRM_DIR/product/app/SpeechServicesByGoogle/oat"
-	rm -rf "$EXTRACTED_FIRM_DIR/product/app/YouTube/oat"
 	rm -rf "$EXTRACTED_FIRM_DIR/product/priv-app"/HotwordEnrollment*
 }
