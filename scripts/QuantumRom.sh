@@ -2437,14 +2437,17 @@ APPLY_CUSTOM_FEATURES() {
     fi
 
 	echo -e "- Adding build prop tweak."
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.locale" "en-US"
     BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "fw.max_users" "5"
     BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "fw.show_multiuserui" "1"
     BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "wifi.interface=" "wlan0"
     BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "wlan.wfd.hdcp" "disable"
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.telephony.sim_slots.count" "2"
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.protected_contents" "true"
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "product" "ro.product.locale" "en-US"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.dha_2ndprop_thMB" "4096"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.dha_cached_min" "4"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.freelimit_val" "11"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.v_bonusEFK" "61440"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.psi_critical" "130"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.swap_free_low_percentage" "73"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.slmk.2nd.swap_free_low_percentage" "35"
 
     # Apply custom floating feature.
 	APPLY_CUSTOM_FLOATING_FEATURE "$EXTRACTED_FIRM_DIR"
