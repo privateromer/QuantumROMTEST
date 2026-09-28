@@ -3,17 +3,16 @@
 
 # GENERAL / SYSTEM / BLOAT
 DEBLOAT_APPS=(
-"HMT" "FactoryCameraFB" "WlanTest" "AirGlance" "AirReadingGlass" 
-"AndroidGlassesCore" "SOAgent77" "ARCore" "ARDrawing" "ARZone"
-"SingleTakeService" "BlockchainBasicKit" "Cameralyzer" 
-"DictDiotekForSec" "EasymodeContactsWidget81"
-"Fast" "FunModeSDK" "GearManagerStub" "KidsHome_Installer"
-"LinkSharing_v11" "LiveDrawing" "MAPSAgent" "MdecService"
-"MinusOnePage" "MoccaMobile" "Netflix_stub" "Notes40"
-"ParentalCare" "PhotoTable" "SmartReminder" "SmartSwitchStub"
-"UnifiedWFC" "UniversalMDMClient" "VoiceAccess" "VTCameraSetting"
-"WebManual" "WifiGuider" "AutomationTest_FB" "FactoryTestProvider"
-"CIDManager" "FacAtFunction" "serviceModeApp_FB"
+"HMT" "PaymentFramework" "FactoryCameraFB" "WlanTest"
+"WlanTest" "AirGlance" "AirReadingGlass" "AndroidGlassesCore"
+"SOAgent77" "ARDrawing" "ARZone"
+"BlockchainBasicKit"
+"Cameralyzer" "DictDiotekForSec"
+"LinkSharing_v11" "LiveDrawing" "MAPSAgent"
+"MinusOnePage" "Netflix_stub" "Notes40"
+"SmartReminder"
+"VoiceAccess"
+"WebManual" "AutomationTest_FB" "FactoryTestProvider"
 )
 
 
@@ -34,15 +33,15 @@ CARRIER_APPS=(
 
 # SAMSUNG FEATURES / APPS
 SAMSUNG_APPS=(
-"SamsungCalendar" "SamsungTTS" "SamsungBilling"
+"SamsungCalendar" "ClockPackage" "OfflineLanguageModel_stub" "IpsGeofence" "DigitalKey"
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
-"SamsungPass" "SamsungSmartSuggestions"
-"SamsungPassAutofill_v1" "WarrantyCare"
-"AirCommand" "AppUpdateCenter" "AREmoji"
-"AREmojiEditor" "AutoDoodle" "AvatarEmojiSticker"
+"SamsungPass"
+"SamsungPassAutofill_v1"
+"AirCommand" "AppUpdateCenter"
+"AREmojiEditor" "AvatarEmojiSticker"
 "AvatarEmojiSticker_S" "AvatarPicker"
-"GalleryWidget" "LiveStickers" "StoryService"
-"StickerFaceARAvatar" "sticker" "PaymentFramework"
+"LiveStickers"
+"sticker"
 )
 
 
@@ -61,8 +60,9 @@ SAMSUNG_BIXBY_APPS=(
 
 # SAMSUNG AI / SMART
 SAMSUNG_AI=(
-"LiveTranscribe" "SmartEye" "SmartPush"
-"SmartPush_64" "SmartThingsKit" "SmartTouchCall"
+"LiveTranscribe" "Bixby"
+"SmartEye" "SmartPush" "SmartPush_64"
+"SmartThingsKit" "SmartTouchCall"
 )
 
 
@@ -70,10 +70,10 @@ SAMSUNG_AI=(
 GOOGLE_APPS=(
 "SpeechServicesByGoogle" "Maps" "Duo" "Photos"
 "AssistantShell" "BardShell" "DuoStub"
-"GoogleCalendarSyncAdapter" "AndroidDeveloperVerifier"
-"YourPhone_Stub" "AndroidAutoStub" "FamilyLinkParentalControls"
-"AndroidSystemIntelligence" "GoogleRestore" "SamsungMessages"
-"SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls"
+"GoogleCalendarSyncAdapter"
+"AndroidAutoStub" "FamilyLinkParentalControls"
+"AndroidSystemIntelligence" "GoogleRestore"
+"SamsungMessages" "SearchSelector" "PlayAutoInstallConfig" "FamilyLinkParentalControls" "Messages"
 )
 
 
@@ -92,21 +92,20 @@ HARDWARE_DRIVERS=(
 # MISC / SERVICES
 MISC_SERVICES=(
 "AuthFramework" "Discover" "DiscoverSEP"
-"EarphoneTypeC" "EasySetup" "FotaAgent"
-"HashTagService" "LedCoverService"
-"LinkToWindowsService" "MemorySaver_O_Refresh"
-"MultiControl" "MultiControlVP6"
+"FotaAgent"
+"LedCoverService"
+"MemorySaver_O_Refresh"
+"MultiControlVP6"
 "OMCAgent5" "OneStoreService" "FactoryAirCommandManager"
 "SOAgent7" "SOAgent75" "SOAgent76"
-"SolarAudio-service" "SPPPushClient"
+"SolarAudio-service"
 "SumeNNService" "SVoiceIME"
 "SwiftkeyIme" "SwiftkeySetting"
 "SystemUpdate" "TADownloader"
-"TalkbackSE" "TalkBack" "TaPackAuthFw"
+"TaPackAuthFw"
 "UltraDataSaving_O" "Upday"
 "YourPhone_P1_5" "DsmsAPK"
-"vexfwk_service" "VexScanner"
-"LiveEffectService" "MyGalaxyService"
+"MyGalaxyService"
 )
 
 
@@ -263,19 +262,21 @@ DEBLOAT() {
 	REMOVE_FABRIC_CRYPTO "$EXTRACTED_FIRM_DIR"
 
 	echo -e "- Deleting unnecessary files and folders."
-    rm -rf "$EXTRACTED_FIRM_DIR/system/system/app"/SamsungTTS*
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.bprof"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/proca.db"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/bin/ssud"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/ssu.rc"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/permissions/privapp-permissions-com.samsung.ssu.xml"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/sysconfig/samsungsimunlock.xml"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/lib64/android.security.securekeygeneration-ndk.so"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/lib64/libssu_keystore2.so"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app/SsuService"
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/permissions/privapp-permissions-com.samsung.android.app.updatecenter.xml"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.prof"
-    rm -rf "$EXTRACTED_FIRM_DIR/system/system/hidden"
+    rm -rf "$EXTRACTED_FIRM_DIR/system/system/hidden/SmartTutor"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/preload"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/mediasearch"
-	rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app/MediaSearch"
-	rm -rf "$EXTRACTED_FIRM_DIR/system/system/priv-app"/GameDriver-*
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/skt"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/tts"
-	rm -rf "$EXTRACTED_FIRM_DIR/product/app/Gmail2/oat"
-    rm -rf "$EXTRACTED_FIRM_DIR/product/app/Maps/oat"
-	rm -rf "$EXTRACTED_FIRM_DIR/product/app/SpeechServicesByGoogle/oat"
-	rm -rf "$EXTRACTED_FIRM_DIR/product/app/YouTube/oat"
 	rm -rf "$EXTRACTED_FIRM_DIR/product/priv-app"/HotwordEnrollment*
 }
