@@ -5,8 +5,8 @@
 DEBLOAT_APPS=(
 "HMT" "PaymentFramework" "FactoryCameraFB" "WlanTest"
 "WlanTest" "AirGlance" "AirReadingGlass" "AndroidGlassesCore"
-"SOAgent77" "ARDrawing" "ARZone"
-"BlockchainBasicKit"
+"SOAgent77" "ARDrawing" "ARZone" "Messages"
+"BlockchainBasicKit" "SmartReminder" "ClockPackage"
 "Cameralyzer" "DictDiotekForSec"
 "LinkSharing_v11" "LiveDrawing" "MAPSAgent"
 "MinusOnePage" "Netflix_stub" "Notes40"
@@ -33,11 +33,11 @@ CARRIER_APPS=(
 
 # SAMSUNG FEATURES / APPS
 SAMSUNG_APPS=(
-"SamsungCalendar" "ClockPackage" "OfflineLanguageModel_stub" "IpsGeofence" "DigitalKey"
+"OfflineLanguageModel_stub" "IpsGeofence" "DigitalKey"
 "OneDrive_Samsung_v3" "SamsungCarKeyFw"
-"SamsungPass"
+"SamsungPass" "KidsHome_Installer"
 "SamsungPassAutofill_v1"
-"AirCommand" "AppUpdateCenter"
+"AirCommand"
 "AREmojiEditor" "AvatarEmojiSticker"
 "AvatarEmojiSticker_S" "AvatarPicker"
 "LiveStickers"
@@ -53,14 +53,12 @@ SAMSUNG_DEX_APPS=("DeXonPC" "DesktopModeUiService" "KnoxDesktopLauncher"
 
 # SAMSUNG BIXBY APPS
 SAMSUNG_BIXBY_APPS=(
-"BixbyWakeup" "BixbyInterpreter" "VisionIntelligence3.7" "Bixby" "BixbyService"
-"BixbyVisionFramework3.5" "SystemUIBixby2" "VisionModel-Stub" "SettingsBixby"
+"BixbyWakeup" "BixbyInterpreter" "Bixby"
 )
 
 
 # SAMSUNG AI / SMART
 SAMSUNG_AI=(
-"LiveTranscribe" "Bixby"
 "SmartEye" "SmartPush" "SmartPush_64"
 "SmartThingsKit" "SmartTouchCall"
 )
