@@ -6,7 +6,7 @@ DEBLOAT_APPS=(
 "HMT" "PaymentFramework" "FactoryCameraFB" "WlanTest"
 "WlanTest" "AirGlance" "AirReadingGlass" "AndroidGlassesCore"
 "SOAgent77" "ARDrawing" "ARZone" "Messages"
-"BlockchainBasicKit" "SmartReminder" "ClockPackage"
+"BlockchainBasicKit" "SmartReminder"
 "Cameralyzer" "DictDiotekForSec"
 "LinkSharing_v11" "LiveDrawing" "MAPSAgent"
 "MinusOnePage" "Netflix_stub" "Notes40"
@@ -261,6 +261,7 @@ DEBLOAT() {
 
 	echo -e "- Deleting unnecessary files and folders."
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.bprof"
+    rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/public.libraries-edensdk.samsung.txt"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/proca.db"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/bin/ssud"
 	rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/ssu.rc"
