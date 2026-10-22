@@ -6,7 +6,7 @@ on:
       STOCK_DEVICE:
         description: "Your own device model or None"
         required: true
-        default: "SM-A225F"
+        default: "SM-A155F"
 
       USE_UI_8_TETHERING_APEX:
         description: "Set True if your kernel BPF version is 5.4 (lower than 5.10)."
@@ -16,12 +16,12 @@ on:
       TARGET_DEVICE:
         description: "TARGET_DEVICE_MODEL."
         required: true
-        default: "SM-A346E"
+        default: "SM-A266B"
 
       TARGET_DEVICE_CSC_OR_DOWNLOAD_LINK:
         description: "Input target device CSC code or direct download link."
         required: true
-        default: "BKD"
+        default: "XXV"
 
       TARGET_FW_VERSION:
         description: "Specific Samsung firmware version (PDA/CSC/MODEM) OR (AP/CSC/CP)"
@@ -40,17 +40,17 @@ on:
       DEBLOAT_SAMSUNG_BIXBY:
         description: "Debloat Samsung Bixby apps (True/False)"
         required: true
-        default: "True"
+        default: "False"
 
       DEBLOAT_SAMSUNG_DEX:
         description: "Debloat Samsung Dex apps (True/False)"
         required: true
-        default: "True"
+        default: "False"
 
       ADD_CHINA_SMART_MANAGER:
         description: "Add china smart manager (True/False)"
         required: true
-        default: "True"
+        default: "False"
 
       ADD_SAMSUNG_FLAGSHIP_APPS:
         description: "Add samsung flagship apps (True/False)"
