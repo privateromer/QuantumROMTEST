@@ -2463,7 +2463,6 @@ APPLY_CUSTOM_FEATURES() {
     fi
 
 	echo -e "- Adding build prop tweak."
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "media.extractor.sec.pcm-32bit" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "Build.BRAND" "MTK"
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.base_build" "noah"
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.audio.ihaladaptervendorextension_enabled" "true"
