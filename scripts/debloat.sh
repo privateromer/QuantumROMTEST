@@ -204,7 +204,7 @@ DEBLOAT_SAMSUNG_BIXBY_APPS() {
         return 1
     fi
 
-    echo -e "Debloating samssung bixby apps."
+    echo -e "Debloating samsung bixby apps."
     KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_BIXBY_APPS[@]}"
 }
 
@@ -223,7 +223,7 @@ DEBLOAT_SAMSUNG_DEX_APPS() {
         return 1
     fi
 
-    echo -e "Debloating samssung dex apps."
+    echo -e "Debloating samsung dex apps."
     KICK "$EXTRACTED_FIRM_DIR" "${SAMSUNG_DEX_APPS[@]}"
 }
 
@@ -258,6 +258,7 @@ DEBLOAT() {
 	REMOVE_FABRIC_CRYPTO "$EXTRACTED_FIRM_DIR"
 
 	echo -e "- Deleting unnecessary files and folders."
+	rm -rf "$EXTRACTED_FIRM_DIR/system/system/kaf"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/app"/SamsungTTS*
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.bprof"
     rm -rf "$EXTRACTED_FIRM_DIR/system/system/etc/init/boot-image.prof"
