@@ -146,9 +146,6 @@
     <local name="LIMITATION_SLOWMOTION_DURING_SMARTVIEW" value="true" />
     <local name="SLOW_MOTION_RECORDING_FPS" value="120" />
 
-    <!-- Hyperlapse features -->
-    <local name="SUPPORT_HYPER_LAPSE_NIGHT_AUTO" value="true" />
-
     <!-- Multi-camera features -->
     <local name="BACK_WIDE_CAMERA_ID" value="50"/>
     <local name="BACK_MACRO_CAMERA_ID" value="54"/>
