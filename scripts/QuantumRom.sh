@@ -2515,6 +2515,25 @@ APPLY_CUSTOM_FEATURES() {
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "debug.hwui.renderer" "skiagl"
 	fi
 	
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "security.mdf.result" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "security.mdf" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.mdf.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.mdf.release" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.wlan.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.wlan.release" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.bt.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.bt.release" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.bio.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.bio.release" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.mdf.ux" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips.ux" "Disabled"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips_bssl.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips_skc.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips_scrypto.ver" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.config.dmverity" "N"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.ai.privacy" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.config.iccc_version" ""
+	
 	echo -e "- Adding tweaks."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "dalvik.vm.dex2oat64.enabled" "true"
 
