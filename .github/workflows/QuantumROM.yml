@@ -16,12 +16,12 @@ on:
       TARGET_DEVICE:
         description: "TARGET_DEVICE_MODEL."
         required: true
-        default: "SM-A266B"
+        default: "SM-A165N"
 
       TARGET_DEVICE_CSC_OR_DOWNLOAD_LINK:
         description: "Input target device CSC code or direct download link."
         required: true
-        default: "XXV"
+        default: "KOO"
 
       TARGET_FW_VERSION:
         description: "Specific Samsung firmware version (PDA/CSC/MODEM) OR (AP/CSC/CP)"
@@ -298,8 +298,7 @@ jobs:
           source "$(pwd)/scripts/QuantumRom.sh"
           B_ID="$(grep -m1 '^ro.system.build.id=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
           B_V="$(grep -m1 '^ro.system.build.version.incremental=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
-          BUILD_PROP "$FIRM_DIR" "system" "ro.build.display.id" "${B_ID} ${B_V} V-${VERSION}: Built with Quantum Tools"
-          BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "${B_ID} ${B_V} V-${VERSION}: Built with Quantum Tools"
+          BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "LemonUI Miracle v3.1 "${B_ID}.${B_V}" Update"
           BUILD_IMG "$FIRM_DIR" "all" "$OUTPUT_FILESYSTEM" "$OUT_DIR"
 
       - name: Compress all .img & make zip file before upload - - ${{ inputs.COMPRESS_IMG }}
