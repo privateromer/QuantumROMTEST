@@ -7,7 +7,7 @@ set -e
 # GitHub automatically provides: GITHUB_REPOSITORY
 
 TAG_NAME="${TARGET_DEVICE}-$(date +%s)"
-RELEASE_NAME="LemonUI Miracle v3.1 ${BUILD_VERSION} Beta 4"
+RELEASE_NAME="LemonUI Miracle v3.1 ${SECURITY_PATCH} Update"
 
 echo "Uploading to GoFile..."
 GOFILE_LINK=$(sudo bash upload.sh "$ZIP_PATH")
