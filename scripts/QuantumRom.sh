@@ -2533,6 +2533,7 @@ APPLY_CUSTOM_FEATURES() {
 	if [ "$STOCK_DEVICE" = "SM-A155F" ]; then
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.midas.device" "a24"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.factory.model" "SM-S711B"
+		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.supports_background_blur" "1"
 	fi
 
 	local ONEUI=$(GET_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.build.version.oneui")
