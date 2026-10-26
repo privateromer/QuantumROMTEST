@@ -26,8 +26,8 @@ source "$(pwd)/scripts/debloat.sh"
 source "$(pwd)/scripts/git_utils.sh"
 source "$(pwd)/scripts/QuantumRom.sh"
 
-REPO="privateromer/QuantumROMTEST"
-BRANCH="Devices"
+REPO="Lemon-UI-Rom/Devices"
+BRANCH="main"
 
 if [ "$STOCK_DEVICE" != "None" ]; then
     if ! curl -fsSL -H "Accept: application/vnd.github+json" \
