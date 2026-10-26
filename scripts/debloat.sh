@@ -110,7 +110,7 @@ MISC_SERVICES=(
 
 
 # Knox
-KNOX_APPS=("Rampart" "KnoxFrameBufferProvider")
+KNOX_APPS=("Rampart" "KnoxFrameBufferProvider" "HdmApk")
 
 
 REMOVE_ESIM_FILES() {

@@ -1610,7 +1610,7 @@ APPLY_CUSTOM_FLOATING_FEATURE() {
     UPDATE_FLOATING_FEATURE "$TARGET_ROM_FLOATING_FEATURE" "SEC_FLOATING_FEATURE_COMMON_CONFIG_SEP_CATEGORY" "sep_basic"
 	
 	#========== GLASSUI ==========#
-	if [ "$STOCK_DEVICE" = "SM-A155F" ]; then
+	if [ "$STOCK_DEVICE" = "A24-A15-A16" ]; then
 		UPDATE_FLOATING_FEATURE "$TARGET_ROM_FLOATING_FEATURE" "SEC_FLOATING_FEATURE_GRAPHICS_SUPPORT_3D_SURFACE_TRANSITION_FLAG" "TRUE"
 	fi
 
@@ -2520,6 +2520,7 @@ APPLY_CUSTOM_FEATURES() {
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "debug.hwui.renderer" "skiagl"
 	fi
 	
+	echo -e "- Knox Patch."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "security.mdf.result" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "security.mdf" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.mdf.ver" ""
@@ -2536,8 +2537,52 @@ APPLY_CUSTOM_FEATURES() {
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips_skc.ver" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.fips_scrypto.ver" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.config.dmverity" "N"
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.security.ai.privacy" ""
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.config.iccc_version" ""
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "wlan.wfd.hdcp" "disable"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/public.libraries-wsm.samsung.txt"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libhal.wsm.samsung.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/vendor.samsung.hardware.security.wsm.service-V1-ndk.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libhal.wsm.samsung.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/vendor.samsung.hardware.security.wsm.service-V1-ndk.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/public.libraries-wsm.samsung.txt"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/bin/dualdard"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/bin/sdp_cryptod"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/init/dualdard.rc"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/init/kpp.init.rc"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/init/kss.init.rc"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/init/sdp_cryptod.rc"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.hdmapp.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.kgclient.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.kfbp.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.knnr.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.mpos.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.pushmanager.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.sandbox.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/privapp-permissions-com.samsung.android.knox.zt.framework.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/permissions/signature-permissions-com.samsung.android.kgclient.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/etc/sysconfig/preinstalled-packages-com.samsung.android.coldwalletservice.xml"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/android.hardware.weaver@1.0.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/hidl_comm_ddar_client.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libdualdar.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libepm.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libhermes_cred.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libkeyutils.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libknox_filemanager.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libmdfpp_req.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libpersona.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libsdp_crypto.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libsdp_kekm.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/libsdp_sdk.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib/vendor.samsung.hardware.tlc.ddar@1.0.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/android.hardware.weaver@1.0.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/hidl_comm_ddar_client.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libdualdar.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libmdfpp_req.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libsdp_crypto.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libsdp_kekm.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/libsdp_sdk.so"
+	rm -rf "${EXTRACTED_FIRM_DIR}/system/system/lib64/vendor.samsung.hardware.tlc.ddar@1.0.so"
+
 	
 	echo -e "- Adding tweaks."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "dalvik.vm.dex2oat64.enabled" "true"
@@ -2549,12 +2594,12 @@ APPLY_CUSTOM_FEATURES() {
 	echo -e "- Adding spoofer."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.device" "m2s"
 
-	if [ "$STOCK_DEVICE" != "SM-A155F" ]; then
+	if [ "$STOCK_DEVICE" != "A24-A15-A16" ]; then
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.has_wide_color_display" "true"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.use_color_management" "true"
 	fi
 
-	if [ "$STOCK_DEVICE" = "SM-A155F" ]; then
+	if [ "$STOCK_DEVICE" = "A24-A15-A16" ]; then
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.midas.device" "a24"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.factory.model" "SM-S711B"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.supports_background_blur" "1"
