@@ -1,34 +1,34 @@
-name: QuantumROM Tools
+name: LemonUI Builder
 
 on:
   workflow_dispatch:
     inputs:
       STOCK_DEVICE:
-        description: "Your own Target"
+        description: "Your own target"
         required: true
         default: "A24-A15-A16"
 
       USE_UI_8_TETHERING_APEX:
-        description: "Set True if your kernel BPF version is 5.4 (lower than 5.10)."
+        description: "Set (True) for patching BPF"
         required: true
         default: "False"
 
       TARGET_DEVICE:
-        description: "TARGET_DEVICE_MODEL."
+        description: "TARGET_DEVICE_MODEL"
         required: true
         default: "SM-A175F"
 
       TARGET_DEVICE_CSC_OR_DOWNLOAD_LINK:
-        description: "Input target device CSC code or direct download link."
+        description: "Input target device CSC code or direct download link"
         required: true
         default: "EUX"
 
       TARGET_FW_VERSION:
-        description: "Specific Samsung firmware version (PDA/CSC/MODEM) OR (AP/CSC/CP)"
+        description: "Specific samsung firmware version (PDA/CSC/MODEM) OR (AP/CSC/CP)"
         required: false
 
       OUTPUT_FILESYSTEM:
-        description: "Output filesystem. e.g erofs / ext4 / f2fs"
+        description: "Output filesystem. e.g erofs / ext4"
         required: true
         default: "erofs"
 
@@ -38,9 +38,9 @@ on:
         default: "True"
 
       DEBLOAT_SAMSUNG_BIXBY:
-        description: "Debloat Samsung Bixby apps (True/False)"
+        description: "Debloat samsung bixby apps (True/False)"
         required: true
-        default: "False"
+        default: "True"
 
       DEBLOAT_SAMSUNG_DEX:
         description: "Debloat Samsung DeX apps (True/False)"
@@ -304,7 +304,7 @@ jobs:
       - name: Compress all .img & make zip file before upload - - ${{ inputs.COMPRESS_IMG }}
         run: |
           echo "BUILD_TIME=$(TZ='Asia/Dhaka' date '+%Y-%m-%d %I:%M:%S %p UTC+6')" | tee -a "$GITHUB_ENV"
-          ZIP_NAME="LemonUI Miracle v3.1 05-10-2026 Update Beta 5.zip"
+          ZIP_NAME="LemonUI Miracle v3.1 05-10-2026 Update Beta 5 For.zip"
           ZIP_PATH="$OUT_DIR/$ZIP_NAME"
 
           FILE_LIST=$(find "$OUT_DIR" -type f -printf '%P\n' | sort)
