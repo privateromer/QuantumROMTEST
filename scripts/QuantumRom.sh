@@ -944,6 +944,37 @@ PATCH_SECURE_FOLDER() {
             return 1
             ;;
     esac
+	
+	 # Window animation tweak (WindowManagerService)
+	if [ "$#" -ne 2 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_FIRMWARE_DIRECTORY> <EXTRACTED_SERVICES_DIRECTORY>"
+        return 1
+    fi
+
+	local WORK_DIR="$2"
+	local OLD_LINE="const/high16 v3, 0x3f800000"
+	local NEW_LINE="const v3, 0x3f59999a # 0.85f"
+	local WMS_SMALI COUNT
+
+	echo -e "Patching WindowManagerService scale."
+
+	WMS_SMALI=$(find "$WORK_DIR" -type f \
+	    -path "*/com/android/server/wm/WindowManagerService.smali" | head -n 1)
+
+	if [ -z "$WMS_SMALI" ]; then
+        echo "- WindowManagerService.smali not found in $WORK_DIR"
+        return 1
+    fi
+
+	COUNT=$(grep -cF "$OLD_LINE" "$WMS_SMALI")
+	echo "- Matches for '$OLD_LINE': $COUNT"
+
+	if [ "$COUNT" -eq 0 ]; then
+        echo "- Line not found, patch skipped (register or code changed?)"
+        return 1
+    fi
+
+	REPLACE_LINE "$OLD_LINE" "$NEW_LINE" "$WMS_SMALI"
 }
 
 
