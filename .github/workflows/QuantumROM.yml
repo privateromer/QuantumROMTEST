@@ -304,7 +304,7 @@ jobs:
       - name: Compress all .img & make zip file before upload - - ${{ inputs.COMPRESS_IMG }}
         run: |
           echo "BUILD_TIME=$(TZ='Asia/Dhaka' date '+%Y-%m-%d %I:%M:%S %p UTC+6')" | tee -a "$GITHUB_ENV"
-          ZIP_NAME="LemonUI Miracle v3.1 ${SECURITY_PATCH} Update.zip"
+          ZIP_NAME="LemonUI Miracle v3.1 05-10-2026 Update Beta 5.zip"
           ZIP_PATH="$OUT_DIR/$ZIP_NAME"
 
           FILE_LIST=$(find "$OUT_DIR" -type f -printf '%P\n' | sort)
@@ -338,7 +338,7 @@ jobs:
               fi
 
           echo "Creating zip: $ZIP_NAME"
-          7z a -tzip "$ZIP_PATH" "$OUT_DIR"/* -mx=9
+          7z a -tzip "$ZIP_PATH" "$OUT_DIR"/* -mx=1
           echo "ZIP_PATH=$ZIP_PATH" | tee -a "$GITHUB_ENV"
 
       - name: Upload file in GoFile & Create Release.
