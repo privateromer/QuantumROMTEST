@@ -169,6 +169,48 @@ REMOVE_LINE() {
 }
 
 
+REPLACE_LINE() {
+    if [ "$#" -ne 3 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <TARGET_LINE> <REPLACE_LINE> <TARGET_FILE>"
+        return 1
+    fi
+
+    local TARGET="$1"
+    local REPLACEMENT="$2"
+    local FILE="$3"
+
+    if [ ! -f "$FILE" ]; then
+        echo -e "- File not found: $FILE"
+        return 1
+    fi
+
+    if ! grep -Fq "$TARGET" "$FILE"; then
+        echo -e "- Target string not found in $FILE: $TARGET"
+        return 0
+    fi
+
+    echo -e "- Replacing in $FILE:"
+    echo -e "  - From: $TARGET"
+    echo -e "  - To:   $REPLACEMENT"
+
+    if command -v python3 &>/dev/null; then
+        python3 -c '
+import sys
+target, repl, file_path = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+    content = f.read()
+if target in content:
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content.replace(target, repl))
+' "$TARGET" "$REPLACEMENT" "$FILE"
+    else
+        local ESCAPED_TARGET=$(printf '%s\n' "$TARGET" | sed -e 's/[]\/$*.^|[]/\\&/g')
+        local ESCAPED_REPLACEMENT=$(printf '%s\n' "$REPLACEMENT" | sed -e 's/[\/&|]/\\&/g')
+        sed -i "s|${ESCAPED_TARGET}|${ESCAPED_REPLACEMENT}|g" "$FILE"
+    fi
+}
+
+
 GET_PROP() {
     if [ "$#" -ne 3 ]; then
         echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_FIRM_DIR> <PARTITION> <PROP>"
@@ -944,6 +986,57 @@ PATCH_SECURE_FOLDER() {
             return 1
             ;;
     esac
+}
+
+
+PATCH_ANIMATION_SCALE() {
+    echo " "
+
+    local WORK_DIR="."
+    if [ "$#" -ge 2 ]; then
+        WORK_DIR="$2"
+    elif [ "$#" -eq 1 ]; then
+        WORK_DIR="$1"
+    fi
+
+    echo -e "Patching WindowManagerService scale."
+
+    local WMS_SMALI=$(find "$WORK_DIR" -type f -path "*/com/android/server/wm/WindowManagerService.smali" 2>/dev/null | head -n 1)
+
+    if [ -z "$WMS_SMALI" ] && [ -n "$1" ] && [ -d "$1" ]; then
+        WMS_SMALI=$(find "$1" -type f -path "*/com/android/server/wm/WindowManagerService.smali" 2>/dev/null | head -n 1)
+    fi
+
+    if [ -z "$WMS_SMALI" ]; then
+        WMS_SMALI=$(find . -type f -path "*/com/android/server/wm/WindowManagerService.smali" 2>/dev/null | head -n 1)
+    fi
+
+    if [ -z "$WMS_SMALI" ] || [ ! -f "$WMS_SMALI" ]; then
+        echo "- WindowManagerService.smali not found in $WORK_DIR"
+        return 0
+    fi
+
+    echo -e "- Found: $WMS_SMALI"
+
+    REPLACE_LINE \
+        "const/high16 v3, 0x3f800000" \
+        "const v3, 0x3f59999a    # 0.85f" \
+        "$WMS_SMALI"
+}
+
+
+PATCH_FRAMEWORK() {
+    PATCH_ANIMATION_SCALE "$@"
+}
+
+
+PATCH_FRAMEWORK_JAR() {
+    PATCH_ANIMATION_SCALE "$@"
+}
+
+
+PATCH_WINDOW_MANAGER() {
+    PATCH_ANIMATION_SCALE "$@"
 }
 
 
