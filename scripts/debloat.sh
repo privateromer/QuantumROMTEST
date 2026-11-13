@@ -67,7 +67,7 @@ SAMSUNG_AI=(
 
 # GOOGLE APPS
 GOOGLE_APPS=(
-"SpeechServicesByGoogle" "Maps" "Duo" "Photos" "YouTube" "Gmail2"
+"SpeechServicesByGoogle" "Maps" "Duo" "Photos" "YouTube" "Gmail2" "Chrome"
 "AssistantShell" "DuoStub"
 "GoogleCalendarSyncAdapter"
 "YourPhone_Stub" "AndroidAutoStub" "FamilyLinkParentalControls"

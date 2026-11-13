@@ -279,6 +279,20 @@ jobs:
               echo "✅ services.jar moved to rom."
           fi
 
+      - name: Patch animation scale (framework.jar)
+        run: |
+          source "$(pwd)/scripts/QuantumRom.sh"
+
+          INSTALL_FRAMEWORK "$APKTOOL" "$FIRM_DIR/system/system/framework/framework-res.apk"
+          DECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$FIRM_DIR/system/system/framework/framework.jar" "$WORK_DIR"
+          PATCH_ANIMATION_SCALE "$WORK_DIR/framework"
+          RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/framework" "$WORK_DIR"
+
+          if [ -f "$WORK_DIR/framework.jar" ]; then
+              mv -f "$WORK_DIR/framework.jar" "$FIRM_DIR/system/system/framework/"
+              echo "✅ framework.jar moved to rom."
+          fi
+
       - name: Patch bluetooth library- ${{ inputs.PATCH_BLUETOOTH_LIBRARY }}
         run: |
           source "$(pwd)/scripts/QuantumRom.sh"

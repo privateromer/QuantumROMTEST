@@ -1721,7 +1721,7 @@ APPLY_CUSTOM_FLOATING_FEATURE() {
 
 	#========== VOICE RECORDER ==========#
     # Do not edit AOD item line for Android 14
-    #UPDATE_FLOATING_FEATURE "$TARGET_ROM_FLOATING_FEATURE" "SEC_FLOATING_FEATURE_VOICERECORDER_CONFIG_DEF_MODE" "normal,interview,voicememo"
+    UPDATE_FLOATING_FEATURE "$TARGET_ROM_FLOATING_FEATURE" "SEC_FLOATING_FEATURE_VOICERECORDER_CONFIG_DEF_MODE" "normal,interview,voicememo"
 
     #========== AUDIO ==========#
     UPDATE_FLOATING_FEATURE "$TARGET_ROM_FLOATING_FEATURE" "SEC_FLOATING_FEATURE_AUDIO_SUPPORT_BT_RECORDING" "TRUE"
@@ -2680,6 +2680,7 @@ APPLY_CUSTOM_FEATURES() {
 	
 	echo -e "- Adding tweaks."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "dalvik.vm.dex2oat64.enabled" "true"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.build.official.release" "false"
 
 	echo -e "- Adding multiuser mode."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "fw.max_users" "5"
