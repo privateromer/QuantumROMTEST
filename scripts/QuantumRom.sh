@@ -2152,9 +2152,6 @@ APPLY_STOCK_CONFIG() {
     if [ -d "${DEVICES_DIR}/${STOCK_DEVICE}/extra" ]; then
         cp -af "${DEVICES_DIR}/${STOCK_DEVICE}/extra/." "${QT_DIR}/OUT"
     fi
-
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.system.model" "SM-S947B"
-	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.system.name" "m2sxxx"
 }
 
 
@@ -2688,6 +2685,8 @@ APPLY_CUSTOM_FEATURES() {
 
 	echo -e "- Adding spoofer."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.device" "m2s"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.system.model" "SM-S947B"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.product.system.name" "m2sxxx"
 
 	if [ "$STOCK_DEVICE" != "A24-A15-A16" ]; then
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.has_wide_color_display" "true"

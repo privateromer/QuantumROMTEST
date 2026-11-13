@@ -80,6 +80,6 @@ PATCH_BT_LIB "$FIRM_DIR" "$WORK_DIR"
 
 B_ID="$(grep -m1 '^ro.system.build.id=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
 B_V="$(grep -m1 '^ro.system.build.version.incremental=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
-BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "LemonUI Miracle v3.1 05-11-2026 Update"
+BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "LemonUI Miracle v3.1 05-11-2026 Update  [${B_ID}.${B_V}]"
 
 BUILD_IMG "$FIRM_DIR" "all" "$OUTPUT_FILESYSTEM" "$OUT_DIR"
