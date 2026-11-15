@@ -751,6 +751,120 @@ RECOMPILE() {
 }
 
 
+APPLY_PATCHES() {
+    echo " "
+
+    if [ "$#" -lt 1 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_DIRECTORY> [JAR_NAME]"
+        return 1
+    fi
+
+    local WORK_DIR="$1"
+    local JAR_NAME=""
+
+    if [ "$#" -ge 2 ]; then
+        JAR_NAME="$(basename "$2")"
+    else
+        JAR_NAME="$(basename "$WORK_DIR").jar"
+    fi
+
+    local JAR_BASE="${JAR_NAME%.jar}"
+    local PATCH_DIR=""
+
+    local SEARCH_DIRS=(
+        "${QT_DIR}/QuantumROM/patches/${JAR_NAME}"
+        "${QT_DIR}/QuantumROM/patches/${JAR_BASE}"
+        "${QT_DIR}/quantumrom/patches/${JAR_NAME}"
+        "${QT_DIR}/quantumrom/patches/${JAR_BASE}"
+    )
+
+    for d in "${SEARCH_DIRS[@]}"; do
+        if [ -d "$d" ]; then
+            PATCH_DIR="$d"
+            break
+        fi
+    done
+
+    if [ -z "$PATCH_DIR" ] || [ ! -d "$PATCH_DIR" ]; then
+        echo "- No patches directory found for $JAR_NAME"
+        return 0
+    fi
+
+    if [ ! -d "$WORK_DIR" ]; then
+        echo "- Target directory not found: $WORK_DIR"
+        return 1
+    fi
+
+    echo -e "Checking patches for $JAR_NAME from: $PATCH_DIR"
+
+    # 1. Apply any .patch and .diff files
+    local PATCH_FILES=$(find "$PATCH_DIR" -maxdepth 1 -type f \( -name "*.patch" -o -name "*.diff" \) 2>/dev/null | sort)
+
+    if [ -n "$PATCH_FILES" ]; then
+        for PATCH_FILE in $PATCH_FILES; do
+            [ -f "$PATCH_FILE" ] || continue
+            local PATCH_NAME="$(basename "$PATCH_FILE")"
+            echo -e "- Applying patch: $PATCH_NAME"
+
+            local APPLIED=false
+
+            if command -v patch &>/dev/null; then
+                for STRIP in 1 0 2; do
+                    if patch -d "$WORK_DIR" -p"$STRIP" --forward --batch --dry-run < "$PATCH_FILE" >/dev/null 2>&1; then
+                        if patch -d "$WORK_DIR" -p"$STRIP" --forward --batch < "$PATCH_FILE" >/dev/null 2>&1; then
+                            echo -e "  ✅ Applied successfully with patch -p$STRIP"
+                            APPLIED=true
+                            break
+                        fi
+                    fi
+                done
+            fi
+
+            if [ "$APPLIED" = false ] && command -v git &>/dev/null; then
+                for STRIP in 1 0 2; do
+                    if git apply --directory="$WORK_DIR" -p"$STRIP" --check "$PATCH_FILE" >/dev/null 2>&1; then
+                        if git apply --directory="$WORK_DIR" -p"$STRIP" "$PATCH_FILE" >/dev/null 2>&1; then
+                            echo -e "  ✅ Applied successfully with git apply -p$STRIP"
+                            APPLIED=true
+                            break
+                        fi
+                    fi
+                done
+            fi
+
+            if [ "$APPLIED" = false ]; then
+                if command -v patch &>/dev/null && (patch -d "$WORK_DIR" -p1 --reverse --batch --dry-run < "$PATCH_FILE" >/dev/null 2>&1 || patch -d "$WORK_DIR" -p0 --reverse --batch --dry-run < "$PATCH_FILE" >/dev/null 2>&1); then
+                    echo -e "  ℹ️ Patch already applied, skipping."
+                else
+                    echo -e "  ⚠️ Failed to apply patch: $PATCH_NAME"
+                fi
+            fi
+        done
+    else
+        echo "- No .patch or .diff files found in $PATCH_DIR"
+    fi
+
+    # 2. Also support direct smali file replacements or folder overlays
+    if find "$PATCH_DIR" -type f -name "*.smali" 2>/dev/null | grep -q .; then
+        echo -e "- Copying replacement smali files from $PATCH_DIR to $WORK_DIR"
+        for sub in "$PATCH_DIR"/smali*; do
+            if [ -d "$sub" ]; then
+                cp -rfa "$sub" "$WORK_DIR/"
+                echo -e "  ✅ Overlaid directory $(basename "$sub")"
+            fi
+        done
+        for smali_file in "$PATCH_DIR"/*.smali; do
+            if [ -f "$smali_file" ]; then
+                cp -fa "$smali_file" "$WORK_DIR/"
+                echo -e "  ✅ Copied $(basename "$smali_file")"
+            fi
+        done
+    fi
+
+    return 0
+}
+
+
 REPLACE_SMALI_METHOD() {
     local FILE="$1"
     local METHOD_NAME="$2"

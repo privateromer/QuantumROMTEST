@@ -258,11 +258,11 @@ jobs:
               APPLY_CUSTOM_FEATURES "$FIRM_DIR"
           fi
 
-      - name: Patch flag secure and secure folder - ${{ inputs.PATCH_SECURE_FOLDER }}
+      - name: Patch services.jar
         run: |
           source "$(pwd)/scripts/QuantumRom.sh"
 
-          if [ "$PATCH_FLAG_SECURE" = "True" ] || [ "$PATCH_SECURE_FOLDER" = "True" ]; then
+          if [ "$PATCH_FLAG_SECURE" = "True" ] || [ "$PATCH_SECURE_FOLDER" = "True" ] || [ -d "$(pwd)/QuantumROM/patches/services.jar" ] || [ -d "$(pwd)/quantumrom/patches/services.jar" ]; then
               INSTALL_FRAMEWORK "$APKTOOL" "$FIRM_DIR/system/system/framework/framework-res.apk"
               DECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$FIRM_DIR/system/system/framework/services.jar" "$WORK_DIR"
           fi
@@ -275,23 +275,14 @@ jobs:
               PATCH_SECURE_FOLDER "$FIRM_DIR" "$WORK_DIR/services"
           fi
 
+          if [ -d "$WORK_DIR/services" ]; then
+              APPLY_PATCHES "$WORK_DIR/services" "services.jar"
+              RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/services" "$WORK_DIR"
+          fi
+
           if [ -f "$WORK_DIR/services.jar" ]; then
               mv -f "$WORK_DIR/services.jar" "$FIRM_DIR/system/system/framework/"
               echo "✅ services.jar moved to rom."
-          fi
-
-      - name: Patch animation scale (framework.jar)
-        run: |
-          source "$(pwd)/scripts/QuantumRom.sh"
-
-          INSTALL_FRAMEWORK "$APKTOOL" "$FIRM_DIR/system/system/framework/framework-res.apk"
-          DECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$FIRM_DIR/system/system/framework/framework.jar" "$WORK_DIR"
-          PATCH_ANIMATION_SCALE "$WORK_DIR/framework"
-          RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/framework" "$WORK_DIR"
-
-          if [ -f "$WORK_DIR/framework.jar" ]; then
-              mv -f "$WORK_DIR/framework.jar" "$FIRM_DIR/system/system/framework/"
-              echo "✅ framework.jar moved to rom."
           fi
 
       - name: Patch bluetooth library- ${{ inputs.PATCH_BLUETOOTH_LIBRARY }}

@@ -65,16 +65,11 @@ DECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$FIRM_DIR/system/syste
 PATCH_SSRM "$WORK_DIR/ssrm"
 PATCH_FLAG_SECURE "$FIRM_DIR" "$WORK_DIR/services"
 PATCH_SECURE_FOLDER "$FIRM_DIR" "$WORK_DIR/services"
+APPLY_PATCHES "$WORK_DIR/services" "services.jar"
 
 RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/ssrm" "$WORK_DIR"
 RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/services" "$WORK_DIR"
 mv -f "$WORK_DIR"/*.jar "$FIRM_DIR/system/system/framework/"
-
-# Patch animation scale (framework.jar)
-DECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$FIRM_DIR/system/system/framework/framework.jar" "$WORK_DIR"
-PATCH_ANIMATION_SCALE "$WORK_DIR/framework"
-RECOMPILE "$APKTOOL" "$FIRM_DIR/system/system/framework" "$WORK_DIR/framework" "$WORK_DIR"
-mv -f "$WORK_DIR"/framework.jar "$FIRM_DIR/system/system/framework/"
 
 PATCH_BT_LIB "$FIRM_DIR" "$WORK_DIR"
 
