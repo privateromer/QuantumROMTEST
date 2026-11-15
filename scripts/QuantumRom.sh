@@ -1068,21 +1068,22 @@ PATCH_PRIVATE_SHARE() {
 DISABLE_SIGNATURE_VERIFICATION() {
     echo " "
 
-	if [ "$#" -ne 2 ]; then
-        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_FIRMWARE_DIRECTORY> <EXTRACTED_SERVICES_DIRECTORY>"
+	if [ "$#" -ne 1 ]; then
+        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_SERVICES_DIRECTORY>"
         return 1
     fi
-	
-    local EXTRACTED_FIRM_DIR="$1"
-	local services="$2"
 
     echo -e "Disabling signature verification."
+	# https://github.com/ShaDisNX255/NcX_Stock/commit/e9fca1cedf2405c9f84dc2ee4aafa018e59de464
+    # https://forum.xda-developers.com/t/mods-samsung-not-android-mods-collection-exynos.3772017/post-87773529
+    # https://forum.xda-developers.com/t/mods-samsung-not-android-mods-collection-exynos.3772017/post-87773543
 
-	local ANDROID_VERSION=$(GET_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.system.build.version.release")
+    # patch .method public static blacklist getMinimumSignatureSchemeVersionForTargetSdk(I)I
 
-    echo "Android version: $ANDROID_VERSION"
+    local FILE="${1}/smali_classes4/android/util/apk/ApkSignatureVerifier.smali"
+	local METHOD_NAME=".method public static blacklist getMinimumSignatureSchemeVersionForTargetSdk(I)I"
 
-	local REPLACE_BODY_1='
+	local REPLACE_BODY='
     .locals 1
 
     const/4 v0, 0x1
@@ -1090,18 +1091,7 @@ DISABLE_SIGNATURE_VERIFICATION() {
     return v0
     '
 
-	case "$ANDROID_VERSION" in
-        15)
-            FILE_1="${services}/smali_classes2/com/android/server/pm/PackageManagerServiceUtils.smali"
-            METHOD_NAME_1=".method public static canJoinSharedUserId(Ljava/lang/String;Landroid/content/pm/SigningDetails;Lcom/android/server/pm/SharedUserSetting;I)Z"
-
-			REPLACE_SMALI_METHOD "$FILE_1" "$METHOD_NAME_1" "$REPLACE_BODY_1"
-            ;;
-        *)
-            echo "- Unsupported Android version: $ANDROID_VERSION"
-            return 1
-            ;;
-    esac
+	REPLACE_SMALI_METHOD "$FILE" "$METHOD_NAME" "$REPLACE_BODY"
 }
 
 
@@ -2707,7 +2697,6 @@ APPLY_CUSTOM_FEATURES() {
 	fi
 
 	if [ "$STOCK_DEVICE" = "A24-A15-A16" ]; then
-		echo -e "- GlassUI 2.0"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.midas.device" "a24"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.factory.model" "SM-S711B"
 		BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.surface_flinger.supports_background_blur" "1"
