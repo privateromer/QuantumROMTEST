@@ -16,7 +16,7 @@ on:
       TARGET_DEVICE:
         description: "TARGET_DEVICE_MODEL"
         required: true
-        default: "SM-A175F"
+        default: "SM-A155F"
 
       TARGET_DEVICE_CSC_OR_DOWNLOAD_LINK:
         description: "Input target device CSC code or direct download link"
@@ -196,6 +196,7 @@ jobs:
               ! -name 'product.img' \
               ! -name 'system.img' \
               ! -name 'system_ext.img' \
+              ! -name 'optics.img' \
               -exec rm -rf {} +
           fi
 

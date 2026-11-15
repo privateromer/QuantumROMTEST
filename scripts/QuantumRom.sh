@@ -2327,7 +2327,7 @@ ADD_CHINA_SMART_MANAGER() {
         return 0
     fi
 
-    if [[ ! "$ANDROID_VERSION" =~ ^(14|15|16)$ ]]; then
+    if [[ ! "$ANDROID_VERSION" =~ ^(14|15|16|17)$ ]]; then
         echo "- Unsupported Android version: $ANDROID_VERSION"
         return 0
     fi
@@ -2677,6 +2677,9 @@ APPLY_CUSTOM_FEATURES() {
 	
 	echo -e "- Adding tweaks."
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "dalvik.vm.dex2oat64.enabled" "true"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system_ext" "dalvik.vm.dex2oat64.enabled" "true"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "product" "dalvik.vm.dex2oat64.enabled" "true"
+	BUILD_PROP "$EXTRACTED_FIRM_DIR" "odm" "dalvik.vm.dex2oat64.enabled" "true"
 	BUILD_PROP "$EXTRACTED_FIRM_DIR" "system" "ro.build.official.release" "false"
 
 	echo -e "- Adding multiuser mode."
