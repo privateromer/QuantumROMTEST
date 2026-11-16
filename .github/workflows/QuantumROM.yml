@@ -197,6 +197,7 @@ jobs:
               ! -name 'system.img' \
               ! -name 'system_ext.img' \
               ! -name 'optics.img' \
+              ! -name 'prism.img' \
               -exec rm -rf {} +
           fi
 
