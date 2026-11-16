@@ -1,4 +1,4 @@
-name: LemonUI Builder
+name: LemonUI Devtool
 
 on:
   workflow_dispatch:
@@ -85,7 +85,7 @@ on:
 
 jobs:
   build:
-    name: Start QuantumROM Tools
+    name: LemonUI Porting
     runs-on: ubuntu-22.04
 
     steps:
@@ -305,7 +305,7 @@ jobs:
           source "$(pwd)/scripts/QuantumRom.sh"
           B_ID="$(grep -m1 '^ro.system.build.id=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
           B_V="$(grep -m1 '^ro.system.build.version.incremental=' "$FIRM_DIR/system/system/build.prop" | cut -d= -f2 | tr -d '\r')"
-          BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "LemonUI Miracle v3.1 05-11-2026 Update  [${B_ID}.${B_V}]"
+          BUILD_PROP "$FIRM_DIR" "product" "ro.build.display.id" "LemonUI Miracle v3.1 [${B_ID}.${B_V}] 05 October 2026"
           BUILD_IMG "$FIRM_DIR" "all" "$OUTPUT_FILESYSTEM" "$OUT_DIR"
 
       - name: Compress all .img & make zip file before upload - - ${{ inputs.COMPRESS_IMG }}
@@ -345,7 +345,7 @@ jobs:
               fi
 
           echo "Creating zip: $ZIP_NAME"
-          7z a -tzip "$ZIP_PATH" "$OUT_DIR"/* -mx=1
+          7z a -tzip "$ZIP_PATH" "$OUT_DIR"/* -mx=0
           echo "ZIP_PATH=$ZIP_PATH" | tee -a "$GITHUB_ENV"
 
       - name: Upload file in GoFile & Create Release.
