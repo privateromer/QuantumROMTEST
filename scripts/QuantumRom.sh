@@ -1182,30 +1182,64 @@ PATCH_PRIVATE_SHARE() {
 DISABLE_SIGNATURE_VERIFICATION() {
     echo " "
 
-	if [ "$#" -ne 1 ]; then
-        echo -e "Usage: ${FUNCNAME[0]} <EXTRACTED_SERVICES_DIRECTORY>"
-        return 1
+    local WORK_DIR="."
+    if [ "$#" -ge 2 ]; then
+        WORK_DIR="$2"
+    elif [ "$#" -ge 1 ]; then
+        WORK_DIR="$1"
     fi
 
     echo -e "Disabling signature verification."
-	# https://github.com/ShaDisNX255/NcX_Stock/commit/e9fca1cedf2405c9f84dc2ee4aafa018e59de464
-    # https://forum.xda-developers.com/t/mods-samsung-not-android-mods-collection-exynos.3772017/post-87773529
-    # https://forum.xda-developers.com/t/mods-samsung-not-android-mods-collection-exynos.3772017/post-87773543
 
-    # patch .method public static blacklist getMinimumSignatureSchemeVersionForTargetSdk(I)I
-
-    local FILE="${1}/smali_classes4/android/util/apk/ApkSignatureVerifier.smali"
-	local METHOD_NAME=".method public static blacklist getMinimumSignatureSchemeVersionForTargetSdk(I)I"
-
-	local REPLACE_BODY='
+    local RET_TRUE='
     .locals 1
 
     const/4 v0, 0x1
- 
+
     return v0
     '
 
-	REPLACE_SMALI_METHOD "$FILE" "$METHOD_NAME" "$REPLACE_BODY"
+    local RET_ZERO='
+    .locals 1
+
+    const/4 v0, 0x0
+
+    return v0
+    '
+
+    local RET_VOID='
+    .locals 0
+
+    return-void
+    '
+
+    # Locate PackageManagerServiceUtils.smali anywhere in WORK_DIR
+    local PMS_UTILS=$(find "$WORK_DIR" -type f -path "*/com/android/server/pm/PackageManagerServiceUtils.smali" 2>/dev/null | head -n 1)
+    if [ -n "$PMS_UTILS" ] && [ -f "$PMS_UTILS" ]; then
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "canJoinSharedUserId(Ljava/lang/String;Landroid/content/pm/SigningDetails;Lcom/android/server/pm/SharedUserSetting;I)Z" "$RET_TRUE"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "compareSignatureArrays([Landroid/content/pm/Signature;[Landroid/content/pm/Signature;)I" "$RET_ZERO"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "compareSignatures(Landroid/content/pm/SigningDetails;Landroid/content/pm/SigningDetails;)I" "$RET_ZERO"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "comparePackageSignatures(Lcom/android/server/pm/PackageSetting;Landroid/content/pm/SigningDetails;)Z" "$RET_TRUE"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "verifySignatures(Lcom/android/server/pm/PackageSetting;Lcom/android/server/pm/SharedUserSetting;Lcom/android/server/pm/PackageSetting;Landroid/content/pm/SigningDetails;ZZZ)Z" "$RET_TRUE"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "checkDowngrade(JI[Ljava/lang/String;[ILandroid/content/pm/PackageInfoLite;)V" "$RET_VOID"
+        REPLACE_SMALI_METHOD "$PMS_UTILS" "isDowngradePermitted(IZ)Z" "$RET_TRUE"
+    else
+        echo "- PackageManagerServiceUtils.smali not found in $WORK_DIR"
+    fi
+
+    # Locate KeySetManagerService.smali anywhere in WORK_DIR
+    local KEYSET_SVC=$(find "$WORK_DIR" -type f -path "*/com/android/server/pm/KeySetManagerService.smali" 2>/dev/null | head -n 1)
+    if [ -n "$KEYSET_SVC" ] && [ -f "$KEYSET_SVC" ]; then
+        REPLACE_SMALI_METHOD "$KEYSET_SVC" "checkUpgradeKeySetLocked(Lcom/android/server/pm/PackageSetting;Lcom/android/server/pm/pkg/AndroidPackage;)Z" "$RET_TRUE"
+        REPLACE_SMALI_METHOD "$KEYSET_SVC" "shouldCheckUpgradeKeySetLocked(Lcom/android/server/pm/PackageSetting;Lcom/android/server/pm/SharedUserSetting;I)Z" "$RET_ZERO"
+    else
+        echo "- KeySetManagerService.smali not found in $WORK_DIR"
+    fi
+}
+
+
+PATCH_APK_SHARED_USER_ID_VERIFICATION() {
+    DISABLE_SIGNATURE_VERIFICATION "$@"
 }
 
 
